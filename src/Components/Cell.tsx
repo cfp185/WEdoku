@@ -1,59 +1,69 @@
-import React from "react";
-import { Pressable, Text, StyleSheet } from "react-native";
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { CellSize, BorderWidth } from './GlobalStyle';
 
 type CellProps = {
-    value: number;
     row: number;
     col: number;
-    onPress: (row: number, col: number) => void;
+    value: number | null;
+    isGiven?: boolean;
+    isSelected?: boolean;
+    onPress?: (args: { row: number; col: number; value: number | null; isGiven: boolean }) => void;
 };
 
-export const Cell: React.FC<CellProps> = ({ value, row, col, onPress }) => {
-    const display = value === 0 ? "" : String(value);
-    
-    // 3x3 block boundaries.
-    const isBlockTop = row > 0 && row % 3 == 0;
-    const isBlockLeft = col > 0 && col % 3 == 0;
-    //const isBlockLastRow  = col == 8; // last row.
-    //const isBlockLastCol = row == 8;    // last column.
-    
-    const cellStyle = [
-        styles.cell,
-        {
-            // thin base grid lines.
-            borderTopWidth: isBlockTop ? 2 : 1,
-            borderLeftWidth: isBlockLeft ? 2 : 1,
-            //borderRightWidth: isBlockLastRow ? 2 : 0,
-            //borderBottomWidth: isBlockLastCol ? 2 : 0,
-            
-            // colors: light gray for normal, black for 3x3 borders.
-            borderTopColor: isBlockTop ? "#000000" : "#CCCCCC",
-            borderLeftColor: isBlockLeft ? "#000000" : "#CCCCCC",
-            //borderRightColor: isBlockLastRow ? "#000000" : "#CCCCCC",
-            //borderBottomColor: isBlockLastCol ? "#000000" : "#CCCCCC",
-            
-            borderRightWidth: 0,
-            borderBottomWidth: 0,
-        },
-    ];
-    
+const Cell: React.FC<CellProps> = ({ row, col, value, isGiven = false, isSelected = false, onPress }) => {
+    const handlePress = () => {
+        onPress && onPress({ row, col, value, isGiven });
+    };
+
+    const displayValue = typeof value === 'number' ? value : '';
+
     return (
-        <Pressable style={cellStyle} onPress={() => onPress(row, col)}>
-            <Text style={styles.text}>{display}</Text>
-        </Pressable>
+        <TouchableOpacity
+            style={[
+                styles.cell,
+                isGiven && styles.givenCell,
+                isSelected && styles.selectedCell,
+                displayValue !== '' && styles.filledCell,
+            ]}
+            activeOpacity={isGiven ? 1 : 0.7}
+            onPress={handlePress}
+        >
+            <Text style={[styles.text, isGiven && styles.givenText]}>
+                {displayValue}
+            </Text>
+        </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
     cell: {
-        flex: 1,
-        aspectRatio: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#FFFFFF",
+        width: CellSize,
+        height: CellSize,
+        backgroundColor: 'lightyellow',
+        borderColor: 'orange',
+        borderWidth: StyleSheet.hairlineWidth,
+        borderRadius: BorderWidth,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    filledCell: {
+        backgroundColor: 'moccasin',
+    },
+    givenCell: {
+        backgroundColor: 'khaki',
+    },
+    givenText: {
+        color: '#555',
+        fontWeight: '600',
+    },
+    selectedCell: {
+        backgroundColor: 'peru',
     },
     text: {
-        fontSize: 20,
-        color: "#333333",
+        color: '#333',
+        fontSize: CellSize * 0.6,
     },
 });
+
+export default Cell;
