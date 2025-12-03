@@ -23,7 +23,7 @@ const Cell: React.FC<CellProps> = ({ row, col, value, isGiven = false, isSelecte
             style={[
                 styles.cell,
                 isGiven && styles.givenCell,
-                isSelected && styles.selectedCell,
+                //isSelected && styles.selectedCell,
                 displayValue !== '' && styles.filledCell,
             ]}
             activeOpacity={isGiven ? 1 : 0.7}
@@ -40,26 +40,26 @@ const styles = StyleSheet.create({
     cell: {
         width: CellSize,
         height: CellSize,
-        backgroundColor: 'lightyellow',
-        borderColor: 'orange',
-        borderWidth: StyleSheet.hairlineWidth,
-        borderRadius: BorderWidth,
+        backgroundColor: '#FFFFFF', // background color of empty cells
+        borderColor: '#DCDCDC', // border of each cell
+        borderWidth: StyleSheet.hairlineWidth*1.5,
+        //borderRadius: BorderWidth,
         alignItems: 'center',
         justifyContent: 'center',
     },
     filledCell: {
-        backgroundColor: 'moccasin',
+        backgroundColor: '#FFFFFF', // background color for filled cells
     },
     givenCell: {
-        backgroundColor: 'khaki',
+        backgroundColor: 'p',
     },
     givenText: {
-        color: '#555',
+        color: '#555', // numbers on grid
         fontWeight: '600',
     },
-    selectedCell: {
-        backgroundColor: 'peru',
-    },
+    // selectedCell: {
+    //     backgroundColor: '#8C00FF', // after clicking a cell
+    // },
     text: {
         color: '#333',
         fontSize: CellSize * 0.6,
