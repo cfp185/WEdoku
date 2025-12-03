@@ -53,13 +53,14 @@ const styles = StyleSheet.create({
         width: BoardWidth,
     },
     board: {
-        width: CellSize * 9 + BorderWidth * 6,
+        width: CellSize * 9 + BorderWidth * 4,
         flexDirection: 'row',
         flexWrap: 'wrap',
-        backgroundColor: 'orange',
+        backgroundColor: '#000000', // outer grid color
+        padding: BorderWidth / 2,   // outer border thickness
     },
     block: {
-        margin: BorderWidth,
+        margin: BorderWidth / 2,    // inner borders: two margins add up
         width: CellSize * 3,
         height: CellSize * 3,
         flexDirection: 'row',
