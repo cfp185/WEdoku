@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import SudokuBoard from '../Components/SudokuBoard';
+import {NumberBar} from "../Components/NumberBar";
 
 const initialGrid: (number | null)[][] = [
     [5, 3, null, null, 7, null, null, null, null],
@@ -18,7 +19,8 @@ const initialGiven = initialGrid.map(row => row.map(cell => cell !== null));
 
 const GameScreen: React.FC = () => {
     const [grid, setGrid] = useState(initialGrid);
-    const [selected, setSelected] = useState<{ row: number; col: number } | null>(null);
+    const [selectedCell, setSelectedCell] = useState<{ row: number; col: number } | null>(null);
+    const [lastNumber, setLastNumber] = useState<number | null>(null);
 
     const handleCellPress = ({ row, col, value, isGiven }: {
         row: number;
@@ -26,13 +28,22 @@ const GameScreen: React.FC = () => {
         value: number | null;
         isGiven: boolean;
     }) => {
-        if (isGiven) return;
+        setSelectedCell({row, col});
+    };
+    
+    // When user taps a number in the bar
+    const handleNumberSelect = (num: number) => {
+        if (!selectedCell) return;
 
-        setSelected({ row, col });
+        const {row, col} = selectedCell;
+        const cellIsGiven = initialGiven[row][col];
+        
+        if (cellIsGiven)
+            return; // Cannot change numbers of initially filled cells
 
         setGrid(prev => {
             const next = prev.map(r => [...r]);
-            next[row][col] = next[row][col] == null ? 1 : null;
+            next[row][col] = num;
             return next;
         });
     };
@@ -42,8 +53,12 @@ const GameScreen: React.FC = () => {
             <SudokuBoard
                 grid={grid}
                 given={initialGiven}
-                selected={selected}
+                selected={selectedCell}
                 onCellPress={handleCellPress}
+            />
+            <NumberBar
+                selected={null} //{lastNumber}
+                onSelect={handleNumberSelect}
             />
         </View>
     );
