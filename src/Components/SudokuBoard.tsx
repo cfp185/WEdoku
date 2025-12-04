@@ -25,7 +25,9 @@ const SudokuBoard: React.FC<SudokuBoardProps> = ({ grid, given, selected, onCell
 
                             const value = grid?.[y]?.[x] ?? null;
                             const isGiven = given?.[y]?.[x] ?? false;
-                            const isSelected = !!(selected && selected.row === y && selected.col === x);
+                            const isSelected = selected && selected.row === y && selected.col === x;
+                            const isSameRow = !!(selected && selected.row === y);
+                            const isSameCol = !!(selected && selected.col === x);
 
                             return (
                                 <Cell
@@ -34,7 +36,9 @@ const SudokuBoard: React.FC<SudokuBoardProps> = ({ grid, given, selected, onCell
                                     col={x}
                                     value={value}
                                     isGiven={isGiven}
-                                    isSelected={isSelected}
+                                    isSelected={!!isSelected}
+                                    isSameRow={isSameRow}
+                                    isSameCol={isSameCol}
                                     onPress={onCellPress}
                                 />
                             );

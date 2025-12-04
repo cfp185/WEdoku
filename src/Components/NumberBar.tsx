@@ -1,5 +1,7 @@
 import React from "react";
 import { View, Pressable, Text, StyleSheet } from "react-native";
+import { CellSize } from './GlobalStyle';
+import Cell from "./Cell";
 
 type NumberBarProps = {
     selected: number | null;
@@ -15,7 +17,7 @@ export const NumberBar: React.FC<NumberBarProps> = ({ selected, onSelect }) => {
                 return (
                     <Pressable
                         key={num}
-                        style={[styles.button, isActive && styles.active]}
+                        style={[styles.button]} 
                         onPress={() => onSelect(num)}
                     >
                         <Text style={styles.text}>{num}</Text>
@@ -37,18 +39,14 @@ const styles = StyleSheet.create({
         width: 35,
         height: 35,
         borderRadius: 5,
-        backgroundColor: "#FFFFFF",
-        borderWidth: 1,
-        borderColor: "#CCCCCC",
+        borderWidth: StyleSheet.hairlineWidth*1.5,
+        borderColor: "#FFFFFF",
         alignItems: "center",
         justifyContent: "center",
     },
-    active: {
-        backgroundColor: "#333333",
-        borderColor: "#333333",
-    },
     text: {
-        fontSize: 18,
-        color: "#333333",
+        fontSize: CellSize * 0.6,
+        fontWeight: '600',
+        color: "#555",
     },
 });
