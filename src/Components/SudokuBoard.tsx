@@ -52,7 +52,7 @@ const SudokuBoard: React.FC<SudokuBoardProps> = ({ grid, given, selected, onCell
 
 const styles = StyleSheet.create({
     boardContainer: {
-        marginTop: 20,
+        //marginTop: 20,
         alignItems: 'center',
         width: BoardWidth,
     },

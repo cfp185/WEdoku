@@ -32,7 +32,8 @@ const Cell: React.FC<CellProps> = ({
             style={({ pressed }) => [
                 styles.cell,
                 displayValue !== '' && styles.filledCell,
-                (isSameRow || isSameCol) && styles.lineHighlight
+                (isSameRow || isSameCol) && styles.lineHighlight,
+                isSelected && styles.selectedCell,
             ]}
         >
             <Text style={[styles.text, isGiven && styles.givenText]}>
@@ -66,10 +67,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#eaf3ea',
     },
     selectedCell: {
-        backgroundColor: '#c2e2c1',
+        backgroundColor: '#c4e3c3',
     },
     pressedCell: {
-        backgroundColor: '#purple',
+        backgroundColor: '#c2e2c1',
     },
     text: {
         color: '#555',

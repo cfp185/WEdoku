@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         gap: 8,
         padding: 10,
-        marginTop: 20,
+        marginTop: 50,
     },
     button: {
         width: 35,
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     text: {
-        fontSize: CellSize * 0.6,
+        fontSize: CellSize * 0.7,
         fontWeight: '600',
         color: "#555",
     },
