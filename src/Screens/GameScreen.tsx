@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import SudokuBoard from '../Components/SudokuBoard';
-import {NumberBar} from "../Components/NumberBar";
+import {EraseButton} from '../Components/EraseButton';
+import {NumberBar} from '../Components/NumberBar';
 
 const initialGrid: (number | null)[][] = [
     [5, 3, null, null, 7, null, null, null, null],
@@ -55,6 +56,22 @@ const GameScreen: React.FC = () => {
                 given={initialGiven}
                 selected={selectedCell}
                 onCellPress={handleCellPress}
+            />
+            <EraseButton
+                onErase={() => {
+                    if (!selectedCell) return;
+                    const { row, col } = selectedCell;
+                    
+                    // don't erase givens
+                    if (initialGiven[row][col])
+                        return;
+                    
+                    setGrid(prev => {
+                        const next = prev.map(r => [...r]);
+                        next[row][col] = null;  // clear value
+                        return next;
+                    });
+                }}
             />
             <NumberBar
                 selected={null} //{lastNumber}
